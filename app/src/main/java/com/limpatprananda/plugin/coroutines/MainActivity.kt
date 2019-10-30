@@ -11,10 +11,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val ioScope = CoroutineScope(Dispatchers.IO)
+
         CoroutineScope(Dispatchers.Default).launch {
-            val result1 = get1Result()
-            val resul2 = get2Result()
+            val result1 = ioScope.async { get1Result() }
+            val resul2 = ioScope.async { get2Result() }
+
             println("Log Result : " + result1 + " " + resul2)
+            println("Log Result.await() : " + result1.await() + " " + resul2.await())
         }
         println("Log #3 Thread: " + Thread.currentThread().name)
     }
