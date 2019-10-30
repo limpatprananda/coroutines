@@ -11,10 +11,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val job = Job()
         CoroutineScope(Dispatchers.Default).launch {
-            val result1 = get1Result()
-            val resul2 = get2Result()
-            println("Log Result : " + result1 + " " + resul2)
+            CoroutineScope(Dispatchers.Default + job).launch {
+                repeat(10){
+                    val result1 = get1Result()
+                    val resul2 = get2Result()
+                    println("Log Result : " + result1 + " " + resul2)
+                }
+            }
+            delay(6000)
+            job.cancel()
+            println("Log : Break role")
         }
         println("Log #3 Thread: " + Thread.currentThread().name)
     }
