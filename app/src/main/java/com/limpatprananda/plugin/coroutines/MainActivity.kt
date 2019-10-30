@@ -11,23 +11,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val result1Api = get1Api()
-            val result2Api = get2Api(result1Api)
-            println("Log result: " + result2Api)
+        CoroutineScope(Dispatchers.Default).launch {
+            println("Log #1 Thread: " + Thread.currentThread().name)
+            delay(3000)
+            println("Log #2 Thread: " + Thread.currentThread().name)
         }
-        println("Log Thread: " + Thread.currentThread().name)
-    }
-
-    private suspend fun get1Api(): String{
-        delay(3000)
-        println("Log Thread: " + Thread.currentThread().name)
-        return "getApi1"
-    }
-
-    private suspend fun get2Api(input: String): String{
-        delay(2000)
-        println("Log Thread: " + Thread.currentThread().name)
-        return input + " -> getApi2"
+        println("Log #3 Thread: " + Thread.currentThread().name)
     }
 }
