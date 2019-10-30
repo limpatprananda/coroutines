@@ -12,10 +12,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         CoroutineScope(Dispatchers.Default).launch {
-            println("Log #1 Thread: " + Thread.currentThread().name)
-            delay(3000)
-            println("Log #2 Thread: " + Thread.currentThread().name)
+            val result1 = get1Result()
+            val resul2 = get2Result()
+            println("Log Result : " + result1 + " " + resul2)
         }
         println("Log #3 Thread: " + Thread.currentThread().name)
+    }
+
+    private suspend fun get1Result(): String{
+        println("Log #1 Thread: " + Thread.currentThread().name)
+        delay(3000)
+        return "Result #1"
+    }
+
+    private suspend fun get2Result(): String{
+        println("Log #2 Thread: " + Thread.currentThread().name)
+        delay(2000)
+        return "Result #2"
     }
 }
